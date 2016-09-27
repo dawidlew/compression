@@ -9,29 +9,33 @@ import math
 import re
 
 
-def read_file_content(path):
-    file_h = open(path, 'r')
-    content = file_h.read()
-    file_h.close()
-
-    # print content
-
-    # size(path)
-    # print os.path.getsize(path)
-
-    stat(path)
-
 def size(path):
     return os.path.getsize(path)
 
 
 def stat(path):
     with open(path, 'r') as fp:
+        col_len = max((nr[0]) for nr in enumerate(fp))
+        print 'col_len: ' + str(col_len)
+    with open(path, 'r') as fp:
+        row_len = max(len(line) for nr, line in enumerate(fp))
+        print 'row_len: ' + str(row_len)
 
-        for nr, line in enumerate(fp):
-            print nr
-            print line
+    # compression(col_len, row_len, path)
 
+
+def compression(path):
+    with open(path, 'r') as fp:
+        for rows, item in enumerate(fp):
+            character = collections.Counter(item)
+            # print character
+            print item
+            for c in item:
+                if c == c:
+                    character = collections.Counter(c)
+                    print character
+                else:
+                    pass
 
 
 
@@ -39,11 +43,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--filepath", type=str,
                         help="Path to the file",
-                        required=True)
+                        required=False)
     args = parser.parse_args()
 
-    path = args.filepath
-    if path is None:
-        path = raw_input('Please input path and name of the file > ')
+    # if not args.filepath:
+    #     args.filepath = raw_input('Please input path and name of the file > ')
 
-    read_file_content(path)
+    if not args.filepath:
+        args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
+
+    compression(args.filepath)
