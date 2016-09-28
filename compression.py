@@ -27,15 +27,15 @@ def stat(path):
 def compression(path):
     with open(path, 'r') as fp:
         for rows, item in enumerate(fp):
-            character = collections.Counter(item)
-            # print character
-            print item
+            results = {}
             for c in item:
-                if c == c:
-                    character = collections.Counter(c)
-                    print character
-                else:
-                    pass
+
+                col = collections.Counter(c)
+                # # print col
+                results[ord(c)] = col[c]
+                # results[ord(c)] = c + 1
+            print results
+
 
 
 
