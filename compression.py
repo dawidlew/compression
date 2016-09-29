@@ -13,29 +13,23 @@ def size(path):
     return os.path.getsize(path)
 
 
-def stat(path):
-    with open(path, 'r') as fp:
-        col_len = max((nr[0]) for nr in enumerate(fp))
-        print 'col_len: ' + str(col_len)
-    with open(path, 'r') as fp:
-        row_len = max(len(line) for nr, line in enumerate(fp))
-        print 'row_len: ' + str(row_len)
-
-    # compression(col_len, row_len, path)
+def read_file_content(path):
+    file_h = open(path, 'r')
+    content = file_h.readlines()
+    file_h.close()
+    return content
 
 
 def compression(path):
-    with open(path, 'r') as fp:
-        for rows, item in enumerate(fp):
-            results = {}
-            for c in item:
+    content = read_file_content(path)
+    sl = {}
+    for lines in content:
+        for c in range(len(lines[:-1])):
+            if lines[c - 1] == lines[c]:
+                print lines[c], c
+                sl[lines[c]] += 1
 
-                col = collections.Counter(c)
-                # # print col
-                results[ord(c)] = col[c]
-                # results[ord(c)] = c + 1
-            print results
-
+    print sl
 
 
 
