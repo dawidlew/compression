@@ -22,14 +22,31 @@ def read_file_content(path):
 
 def compression(path):
     content = read_file_content(path)
-    sl = {}
-    for lines in content:
-        for c in range(len(lines[:-1])):
-            if lines[c - 1] == lines[c]:
-                print lines[c], c
-                sl[lines[c]] += 1
+    ll = []
+    for line in content:
+        sl = {}
+        last = None
+        line = line.strip()
+        for _, char in enumerate(line):
+          # print("char: '%s'" % str(char))
+          if last <> char:
+            ll.append(sl)
+            sl = {}
+            sl[str(char)] = 1
+          else:
+            sl[str(char)] += 1
+          # print(str(sl))
+          last = char
+        # print sl
+    # print ll
+    cleaning_set(ll)
 
-    print sl
+
+def cleaning_set(ll):
+    print ll[11]
+
+
+# def write_file_content():
 
 
 
