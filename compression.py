@@ -38,15 +38,23 @@ def compression(path):
           # print(str(sl))
           last = char
         # print sl
-    # print ll
-    cleaning_set(ll)
+
+    cleaning_set(ll, path)
 
 
-def cleaning_set(ll):
-    print ll[11]
+def cleaning_set(ll, path):
+    s = ''
+    for v in ll:
+        for kk, vv in v.items():
+            s += str(kk) + str(vv)
+
+    # print len(s)
+    # return s
+
+    print 'Zysk z kompresji: %.02f %%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
 
 
-# def write_file_content():
+    # def write_file_content():
 
 
 
@@ -63,4 +71,4 @@ if __name__ == "__main__":
     if not args.filepath:
         args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
 
-    compression(args.filepath)
+    compression('test2')
