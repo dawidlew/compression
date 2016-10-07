@@ -19,10 +19,20 @@ def read_file_content(path):
     file_h.close()
     return content
 
+def write_file(path):
+    s = compression1(path)
+    # my_file = open("out.txt", "w")
+    # my_file.write("Hello world")
+    print s
+    print 'Zysk z kompresji @: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
 
-def compression(path):
+    s = compression2(path)
+    print s
+    print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+
+
+def compression1(path):
     content = read_file_content(path)
-    
     ll = []
     for line in content:
         sl = {}
@@ -36,21 +46,41 @@ def compression(path):
           else:
             sl[(char)] += 1
           last = char
+    s = cleaning_set(ll)
+    return s
 
-    cleaning_set(ll, path)
 
 
-def cleaning_set(ll, path):
+def compression2(path):
+    content = read_file_content(path)
+    ll = []
+    for line in reversed(content): # reversed odwraca linie
+        sl = {}
+        last = None
+        line = line.strip()
+        line = line[::-1]  # odwraca znaki w linii
+        for i, char in enumerate(line):
+          if last <> char:
+            sl = {}
+            ll.append(sl)
+            sl[(char)] = 1
+          else:
+            sl[(char)] += 1
+          last = char
+    s = cleaning_set(ll)
+    return s
+
+
+def cleaning_set(set):
     s = ''
-    for v in ll:
+    for v in set:
         for kk, vv in v.items():
             if vv == 1:
                 vv = ""
             elif vv == 2:
                 vv = str(kk)
             s += str(kk) + str(vv)
-    print s
-    print 'Zysk z kompresji: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+    return s
 
 
 if __name__ == "__main__":
@@ -66,4 +96,4 @@ if __name__ == "__main__":
     if not args.filepath:
         args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
 
-    compression(args.filepath)
+    write_file(args.filepath)
