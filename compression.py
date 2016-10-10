@@ -20,18 +20,46 @@ def read_file_content(path):
     return content
 
 def write_file(path):
-    s = compression1(path)
-    # my_file = open("out.txt", "w")
-    # my_file.write("Hello world")
-    print s
-    print 'Zysk z kompresji @: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+    s = compression_std(path)
+    u = compression_90(path)
 
-    s = compression2(path)
-    print s
-    print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+    # t = compression_odwrotnie(path)
+    # print t
+    # print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(t) * 1.0 / size(path)) * 100.0))
+
+    if u >= s:
+        print u
+        print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(u) * 1.0 / size(path)) * 100.0))
+        my_file = open("out.txt", "w")
+        my_file.write(u)
+    else:
+        print s
+        print 'Zysk z kompresji @: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+        my_file = open("out.txt", "w")
+        my_file.write(s)
 
 
-def compression1(path):
+def compression_90(path):
+    content = read_file_content(path)
+    result = [[content[j][i] for j in range(len(content))] for i in range(len(content[0]))]
+    ll = []
+    for line in result:
+        sl = {}
+        last = None
+        for i, char in enumerate(line):
+
+            if last <> char:
+                sl = {}
+                ll.append(sl)
+                sl[(char)] = 1
+            else:
+                sl[(char)] += 1
+            last = char
+    u = cleaning_set(ll)
+    return u
+
+
+def compression_std(path):
     content = read_file_content(path)
     ll = []
     for line in content:
@@ -51,24 +79,24 @@ def compression1(path):
 
 
 
-def compression2(path):
-    content = read_file_content(path)
-    ll = []
-    for line in reversed(content): # reversed odwraca linie
-        sl = {}
-        last = None
-        line = line.strip()
-        line = line[::-1]  # odwraca znaki w linii
-        for i, char in enumerate(line):
-          if last <> char:
-            sl = {}
-            ll.append(sl)
-            sl[(char)] = 1
-          else:
-            sl[(char)] += 1
-          last = char
-    s = cleaning_set(ll)
-    return s
+# def compression_odwrotnie(path):
+#     content = read_file_content(path)
+#     ll = []
+#     for line in reversed(content): # reversed odwraca linie
+#         sl = {}
+#         last = None
+#         line = line.strip()
+#         line = line[::-1]  # odwraca znaki w linii
+#         for i, char in enumerate(line):
+#           if last <> char:
+#             sl = {}
+#             ll.append(sl)
+#             sl[(char)] = 1
+#           else:
+#             sl[(char)] += 1
+#           last = char
+#     s = cleaning_set(ll)
+#     return s
 
 
 def cleaning_set(set):
