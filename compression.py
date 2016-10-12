@@ -28,15 +28,15 @@ def write_file(path):
     # print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(t) * 1.0 / size(path)) * 100.0))
 
     if u >= s:
-        print u
-        print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(u) * 1.0 / size(path)) * 100.0))
+
+        print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(u) * 1.0 / size(path)) * 100.0))
         my_file = open("out.txt", "w")
-        my_file.write(u)
+        my_file.write(u + '@')
     else:
-        print s
-        print 'Zysk z kompresji @: %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
+
+        print 'Zysk z kompresji (90 stopni): %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
         my_file = open("out.txt", "w")
-        my_file.write(s)
+        my_file.write(s + '#')
 
 
 def compression_90(path):
@@ -47,7 +47,6 @@ def compression_90(path):
         sl = {}
         last = None
         for i, char in enumerate(line):
-
             if last <> char:
                 sl = {}
                 ll.append(sl)
@@ -118,10 +117,10 @@ if __name__ == "__main__":
                         required=False)
     args = parser.parse_args()
 
-    # if not args.filepath:
-    #     args.filepath = raw_input('Please input path and name of the file > ')
-
     if not args.filepath:
-        args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
+        args.filepath = raw_input('Please input path and name of the file > ')
+
+    # if not args.filepath:
+    #     args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
 
     write_file(args.filepath)
