@@ -1,12 +1,7 @@
 # coding=utf-8
 import argparse
-import collections
-import string
 import os
 import sys
-import mimetypes
-import math
-import re
 
 
 def size(path):
@@ -28,20 +23,25 @@ def write_file(path):
     # print 'Zysk z kompresji #: %.02f%%' % (100 - ((len(t) * 1.0 / size(path)) * 100.0))
 
     if u >= s:
-
         print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(u) * 1.0 / size(path)) * 100.0))
         my_file = open("out.txt", "w")
         my_file.write(u + '@')
-    else:
 
+        print 'u: ' + u
+
+    else:
         print 'Zysk z kompresji (90 stopni): %.02f%%' % (100 - ((len(s) * 1.0 / size(path)) * 100.0))
         my_file = open("out.txt", "w")
         my_file.write(s + '#')
 
+        print 's: ' + s
+
 
 def compression_90(path):
     content = read_file_content(path)
+
     result = [[content[j][i] for j in range(len(content))] for i in range(len(content[0]))]
+
     ll = []
     for line in result:
         sl = {}
@@ -117,10 +117,10 @@ if __name__ == "__main__":
                         required=False)
     args = parser.parse_args()
 
-    if not args.filepath:
-        args.filepath = raw_input('Please input path and name of the file > ')
-
     # if not args.filepath:
-    #     args.filepath = 'c:/moje/aaa/git_nauka/compression/test1.txt'
+    #     args.filepath = raw_input('Please input path and name of the file > ')
+
+    if not args.filepath:
+        args.filepath = 'c:/moje/aaa/git_nauka/compression/output_file.csv'
 
     write_file(args.filepath)
