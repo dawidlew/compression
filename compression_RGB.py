@@ -34,6 +34,15 @@ def write_file(path):
 
     print 'u: ' + str(u)
 
+    write_bin(u)
+
+def write_bin(u):
+    import pickle
+
+    output_file = open("out.bin", "wb")
+    pickle.dump(u, output_file)
+    output_file.close()
+
 
 def compression_std(path):
     content = read_file_content(path)
