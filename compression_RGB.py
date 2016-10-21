@@ -2,7 +2,7 @@
 import argparse
 import os
 import Image
-
+import string
 
 def size(path):
     return os.path.getsize(path)
@@ -32,9 +32,10 @@ def write_file(path):
     my_file = open("out.txt", "w")
     my_file.write(str(u) + '@')
 
-    print 'u: ' + str(u)
+    # print 'u: ' + str(u)
 
     write_bin(u)
+
 
 def write_bin(u):
     import pickle
@@ -46,7 +47,14 @@ def write_bin(u):
 
 def compression_std(path):
     content = read_file_content(path)
-    print content
+    # print content
+    pixels = get_colors(path).values()
+    # print pixels
+
+
+    item_generator = ((k, pixels[k]) for k in content if k in pixels)
+    print item_generator
+
 
     ll = []
     sl = {}
@@ -59,8 +67,18 @@ def compression_std(path):
       else:
         sl[(char)] += 1
       last = char
-
     return ll
+
+
+def get_colors(path):
+    img = Image.open(path)
+    colors = img.convert('RGB').getcolors()
+
+    pixel = []
+    for item in colors:
+        pixel.append((item[1]))
+    z = dict(zip(string.letters, pixel))
+    return z
 
 
 if __name__ == "__main__":
