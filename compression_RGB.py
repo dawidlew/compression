@@ -1,8 +1,9 @@
 # coding=utf-8
 import argparse
 import os
-import Image
+from PIL import Image
 import string
+
 
 def size(path):
     return os.path.getsize(path)
@@ -33,24 +34,23 @@ def write_file(path):
     for item in u:
         for key, value in item.iteritems():
             x.append(key + str(value))
-    print x
-
+    # print x
 
 
     print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(x) * 1.0 / size(path)) * 100.0))
     my_file = open("out.txt", "w")
-    my_file.write(str(x) + '@')
+    my_file.write("".join(x))
 
     # print 'u: ' + str(u)
 
     write_bin(x)
 
 
-def write_bin(u):
+def write_bin(x):
     import pickle
 
     output_file = open("out.bin", "wb")
-    pickle.dump(u, output_file)
+    pickle.dump(x, output_file)
     output_file.close()
 
 
