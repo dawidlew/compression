@@ -4,6 +4,7 @@ import os
 from PIL import Image
 import string
 
+file = 'out.txt'
 
 def size(path):
     return os.path.getsize(path)
@@ -34,14 +35,11 @@ def write_file(path):
     for item in u:
         for key, value in item.iteritems():
             x.append(key + str(value))
-    # print x
+    print x
 
-
-    print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(x) * 1.0 / size(path)) * 100.0))
-    my_file = open("out.txt", "w")
+    print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((size(os.getcwd() + '/' + file) * 1.0 / size(path)) * 100.0))
+    my_file = open(file, "w")
     my_file.write("".join(x))
-
-    # print 'u: ' + str(u)
 
     write_bin(x)
 
