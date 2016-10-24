@@ -27,14 +27,23 @@ def read_file_content(path):
 
 def write_file(path):
     u = compression_std(path)
+    # print u
 
-    print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(u) * 1.0 / size(path)) * 100.0))
+    x = []
+    for item in u:
+        for key, value in item.iteritems():
+            x.append(key + str(value))
+    print x
+
+
+
+    print 'Zysk z kompresji (standard): %.02f%%' % (100 - ((len(x) * 1.0 / size(path)) * 100.0))
     my_file = open("out.txt", "w")
-    my_file.write(str(u) + '@')
+    my_file.write(str(x) + '@')
 
     # print 'u: ' + str(u)
 
-    write_bin(u)
+    write_bin(x)
 
 
 def write_bin(u):
@@ -48,18 +57,20 @@ def write_bin(u):
 def compression_std(path):
     content = read_file_content(path)
     # print content
-    pixels = get_colors(path).values()
+    pixels = get_colors(path)
     # print pixels
 
-
-    item_generator = ((k, pixels[k]) for k in content if k in pixels)
-    print item_generator
-
+    n = []
+    for i in content:
+        for k, v in pixels.items():
+            if i == v:
+                n.append(k)
+    # print n
 
     ll = []
     sl = {}
     last = None
-    for i, char in enumerate(content):
+    for i, char in enumerate(n):
       if last <> char:
         sl = {}
         ll.append(sl)
@@ -67,6 +78,7 @@ def compression_std(path):
       else:
         sl[(char)] += 1
       last = char
+
     return ll
 
 
@@ -78,6 +90,7 @@ def get_colors(path):
     for item in colors:
         pixel.append((item[1]))
     z = dict(zip(string.letters, pixel))
+
     return z
 
 

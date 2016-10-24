@@ -12,7 +12,7 @@ for item in colors:
 
 z = dict(zip(string.letters, pixel))
 
-print z
+print pixel
 
 
 # for a in string.letters:
